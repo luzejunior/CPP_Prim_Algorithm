@@ -7,5 +7,6 @@ class Graph{
   public:
     vector<Node*> nodeVector;
     //Graph();
-    void createGraph();
+    void createGraph(Node*);
+    void PrimAlgorithm();
 };
