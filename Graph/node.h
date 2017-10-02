@@ -36,8 +36,8 @@ using namespace std;
 class Node{
   public:
     string name;
-    std::vector<Vertice> vVector;
-    Node(std::string name);
+    vector<Vertice> vVector;
+    Node(string name);
     void createVertice(int, Node*);
     void createNode(int value);
   };
