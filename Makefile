@@ -1,7 +1,7 @@
 CC = g++
 
-program: *.cpp *.h
-	$(CC) *.cpp -o program
+program: Graph/*.cpp Graph/*.h main.cpp
+	$(CC) Graph/*.cpp main.cpp -o program
 
 run:
 	./program
