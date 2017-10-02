@@ -45,14 +45,25 @@ int Graph::getNodeByName(string name){
   return -1;
 }
 
+int Graph::findNodeOnVector(Node* node){
+  if(find(this->visitedNodes.begin(), this->visitedNodes.end(), node) != this->visitedNodes.end()){
+    return 0;
+  }else{
+    return 1;
+  }
+}
+
 int Graph::getMinorValueFromGraphList(int i){
   int minorValue = 999999999;
   int index = 0;
 
   for(int j=0; j<this->nodeVector[i]->vVector.size(); j++){
-    if(this->nodeVector[i]->vVector[j].value < minorValue){
-      minorValue = this->nodeVector[i]->vVector[j].value;
-      index = j;
+    if(findNodeOnVector(this->nodeVector[i]->vVector[j].nextNode)){
+      if(this->nodeVector[i]->vVector[j].value < minorValue){
+        cout << "Vector name: " << this->nodeVector[i]->vVector[j].nextNode->name << " Vector to compare: " << endl;
+        minorValue = this->nodeVector[i]->vVector[j].value;
+        index = j;
+      }
     }
   }
 
@@ -66,21 +77,23 @@ void Graph::PrimAlgorithm(){
   //    this->nodeVector[i]->vVector[j].nextNode->name << " neighboor with value: " << this->nodeVector[i]->vVector[j].value << endl;
   //  }
   //}
-  vector<Node*> visitedNodes;
+  
   int i = 0;
+  int auxindex = 0;
   int sum = 0;
 
-  while(visitedNodes.size() < this->nodeVector.size()){
-    visitedNodes.push_back(this->nodeVector[i]);
+  while(this->visitedNodes.size() < this->nodeVector.size()){
+    this->visitedNodes.push_back(this->nodeVector[i]);
     int minorIndex = getMinorValueFromGraphList(i);
-    i = getNodeByName(this->nodeVector[i]->vVector[minorIndex].nextNode->name);
+    auxindex = getNodeByName(this->nodeVector[i]->vVector[minorIndex].nextNode->name);
     sum += this->nodeVector[i]->vVector[minorIndex].value;
+    i = auxindex;
   }
 
   cout << "Sum of everything: " << sum << endl;
-  for(int i=0; i<visitedNodes.size(); i++){
+  for(int i=0; i<this->visitedNodes.size(); i++){
     //for(int j=0; j<visitedNodes[i]->vVector.size(); j++){
-      cout << "The vector " << visitedNodes[i]->name << endl;
+      cout << "The vector " << this->visitedNodes[i]->name << endl;
       //visitedNodes[i]->vVector[j].nextNode->name << " neighboor with value: " << visitedNodes[i]->vVector[j].value << endl;
     //}
   }
