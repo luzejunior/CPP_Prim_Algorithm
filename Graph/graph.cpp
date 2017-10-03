@@ -85,6 +85,15 @@ int Graph::getMinorValueFromGraphList(int* i){
   return index;
 }
 
+void Graph::upgradeNodeWeight(Node* node){
+  for(int i=0; i<node->vVector.size(); i++){
+    int sumWeight = node->weight + node->vVector[i].value;
+    if(sumWeight < node->vVector[i].nextNode->weight){
+      node->vVector[i].nextNode->weight = sumWeight;
+    }
+  }
+}
+
 void Graph::PrimAlgorithm(){
   //for(int i=0; i<this->nodeVector.size(); i++){
   //  for(int j=0; j<this->nodeVector[i]->vVector.size(); j++){
@@ -92,7 +101,7 @@ void Graph::PrimAlgorithm(){
   //    this->nodeVector[i]->vVector[j].nextNode->name << " neighboor with value: " << this->nodeVector[i]->vVector[j].value << endl;
   //  }
   //}
-  
+
   int i = 0;
   int auxindex = 0;
   int sum = 0;
@@ -115,4 +124,17 @@ void Graph::PrimAlgorithm(){
       //visitedNodes[i]->vVector[j].nextNode->name << " neighboor with value: " << visitedNodes[i]->vVector[j].value << endl;
     //}
   }
+}
+
+void Graph::DijkstraAlgorihm(){
+  int i = 0;
+  this->visitedNodes.push_back(this->nodeVector[i]);
+  this->visitedNodes[i]->weight = 0;
+  upgradeNodeWeight(this->visitedNodes[i]);
+
+  for(int j=0; j<this->visitedNodes[i]->vVector.size(); j++){
+    cout << "Node: " << this->visitedNodes[i]->name << " Going to " << this->visitedNodes[i]->vVector[j].nextNode->name << " which has weight: " << this->visitedNodes[i]->vVector[j].nextNode->weight << endl;
+  }
+  //while(this->visitedNodes.size() < this->nodeVector.size()){
+  //}
 }
