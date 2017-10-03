@@ -36,6 +36,7 @@ using namespace std;
 class Node{
   public:
     string name;
+    int weight = 999999999;
     vector<Vertice> vVector;
     Node(string name);
     void createVertice(int, Node*);
