@@ -94,6 +94,20 @@ void Graph::upgradeNodeWeight(Node* node){
   }
 }
 
+int Graph::getMinorNextNode(Node* node){
+  int minorValue = 999999999;
+  int index = 0;
+
+  for(int i=0; i<node->vVector.size(); i++){
+    if(node->vVector[i].nextNode->weight < minorValue){
+      minorValue = node->vVector[i].nextNode->weight;
+      index = i;
+    }
+  }
+
+  return index;
+}
+
 void Graph::PrimAlgorithm(){
   //for(int i=0; i<this->nodeVector.size(); i++){
   //  for(int j=0; j<this->nodeVector[i]->vVector.size(); j++){
@@ -130,11 +144,23 @@ void Graph::DijkstraAlgorihm(){
   int i = 0;
   this->visitedNodes.push_back(this->nodeVector[i]);
   this->visitedNodes[i]->weight = 0;
-  upgradeNodeWeight(this->visitedNodes[i]);
+  
 
-  for(int j=0; j<this->visitedNodes[i]->vVector.size(); j++){
-    cout << "Node: " << this->visitedNodes[i]->name << " Going to " << this->visitedNodes[i]->vVector[j].nextNode->name << " which has weight: " << this->visitedNodes[i]->vVector[j].nextNode->weight << endl;
+  while(this->visitedNodes.size() < this->nodeVector.size()){
+    upgradeNodeWeight(this->visitedNodes[i]);
+    int minorIndex = getMinorNextNode(this->visitedNodes[i]);
+    int auxIndex = getNodeByName(this->visitedNodes[i]->vVector[minorIndex].nextNode->name);
+    cout << "Aux Index: " << auxIndex << endl;
+    this->visitedNodes.push_back(this->nodeVector[auxIndex]);
+    i++;
   }
+
+  for(i=0;i<this->visitedNodes.size();i++){
+    for(int j=0; j<this->visitedNodes[i]->vVector.size(); j++){
+      cout << "Node: " << this->visitedNodes[i]->name << " Going to " << this->visitedNodes[i]->vVector[j].nextNode->name << " which has weight: " << this->visitedNodes[i]->vVector[j].nextNode->weight << endl;
+    }
+  }
+  
   //while(this->visitedNodes.size() < this->nodeVector.size()){
   //}
 }
