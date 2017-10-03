@@ -53,20 +53,35 @@ int Graph::findNodeOnVector(Node* node){
   }
 }
 
-int Graph::getMinorValueFromGraphList(int i){
+int Graph::getMinorValueFromGraphList(int* i){
   int minorValue = 999999999;
   int index = 0;
 
-  for(int j=0; j<this->nodeVector[i]->vVector.size(); j++){
-    if(findNodeOnVector(this->nodeVector[i]->vVector[j].nextNode)){
-      if(this->nodeVector[i]->vVector[j].value < minorValue){
-        cout << "Vector name: " << this->nodeVector[i]->vVector[j].nextNode->name << " Vector to compare: " << endl;
-        minorValue = this->nodeVector[i]->vVector[j].value;
-        index = j;
+  //for(int j=0; j<this->nodeVector[i]->vVector.size(); j++){
+  //  if(findNodeOnVector(this->nodeVector[i]->vVector[j].nextNode)){
+  //    if(this->nodeVector[i]->vVector[j].value < minorValue){
+  //      cout << "Vector name: " << this->nodeVector[i]->vVector[j].nextNode->name << " Vector to compare: " << endl;
+  //      minorValue = this->nodeVector[i]->vVector[j].value;
+  //      index = j;
+  //    }
+  //  }
+  //}
+
+  for(int k=0; k<this->visitedNodes.size(); k++){
+    for(int j=0; j<this->visitedNodes[k]->vVector.size(); j++){
+      if(findNodeOnVector(this->visitedNodes[k]->vVector[j].nextNode)){
+        if(this->visitedNodes[k]->vVector[j].value < minorValue){
+          cout << "k Value: " << k << endl;
+          cout << "j Value: " << j << endl;
+          cout << "Vector name: " << this->visitedNodes[k]->name << " Going to: " << this->visitedNodes[k]->vVector[j].nextNode->name << endl;
+          minorValue = this->visitedNodes[k]->vVector[j].value;
+          index = j;
+          *i = k;
+        }
       }
     }
   }
-
+  cout << "index Value: " << index << endl;
   return index;
 }
 
@@ -81,13 +96,16 @@ void Graph::PrimAlgorithm(){
   int i = 0;
   int auxindex = 0;
   int sum = 0;
+  this->visitedNodes.push_back(this->nodeVector[i]);
 
   while(this->visitedNodes.size() < this->nodeVector.size()){
-    this->visitedNodes.push_back(this->nodeVector[i]);
-    int minorIndex = getMinorValueFromGraphList(i);
-    auxindex = getNodeByName(this->nodeVector[i]->vVector[minorIndex].nextNode->name);
-    sum += this->nodeVector[i]->vVector[minorIndex].value;
+    int minorIndex = getMinorValueFromGraphList(&i);
+    cout << "i Value: " << i << endl;
+    auxindex = getNodeByName(this->visitedNodes[i]->vVector[minorIndex].nextNode->name);
+    cout << "Value: " << this->visitedNodes[i]->vVector[minorIndex].value << endl;
+    sum += this->visitedNodes[i]->vVector[minorIndex].value;
     i = auxindex;
+    this->visitedNodes.push_back(this->nodeVector[i]);
   }
 
   cout << "Sum of everything: " << sum << endl;

@@ -13,6 +13,6 @@ class Graph{
     void createGraph(Node*);
     int findNodeOnVector(Node*);
     int getNodeByName(string);
-    int getMinorValueFromGraphList(int);
+    int getMinorValueFromGraphList(int*);
     void PrimAlgorithm();
 };
