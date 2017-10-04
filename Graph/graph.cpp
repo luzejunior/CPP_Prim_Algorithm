@@ -149,17 +149,18 @@ void Graph::PrimAlgorithm(){
 
 void Graph::DijkstraAlgorihm(){
   int i = 0;
+  int auxIndex = 0;
   this->visitedNodes.push_back(this->nodeVector[i]);
   this->visitedNodes[i]->weight = 0;
 
 
   while(this->visitedNodes.size() < this->nodeVector.size()){
-    upgradeNodeWeight(this->visitedNodes[i]);
+    upgradeNodeWeight(this->nodeVector[auxIndex]);
     int minorIndex = getMinorNextNode(&i);
-    int auxIndex = getNodeByName(this->visitedNodes[i]->vVector[minorIndex].nextNode->name);
+    auxIndex = getNodeByName(this->visitedNodes[i]->vVector[minorIndex].nextNode->name);
     cout << "Aux Index: " << auxIndex << endl;
     this->visitedNodes.push_back(this->nodeVector[auxIndex]);
-    i++;
+    //i++;
   }
 
   for(i=0;i<this->visitedNodes.size();i++){
