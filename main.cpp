@@ -1,5 +1,9 @@
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include "Graph/graph.h"
+
+using namespace std;
 
 int main(){
   Graph g1;
@@ -15,8 +19,8 @@ int main(){
   // Node n9("i");
   //
   // //Vertices from A:
-  // //n1.createVertice(4, &n2);
-  // //n1.createVertice(8, &n8);
+  // n1.createVertice(4, &n2);
+  // n1.createVertice(8, &n8);
   //
   // //Vertices from B:
   // n2.createVertice(4, &n1);
@@ -70,35 +74,68 @@ int main(){
   // g1.createGraph(&n8);
   // g1.createGraph(&n9);
 
-  Node n1("S");
-  Node n2("A");
-  Node n3("B");
-  Node n4("C");
-  Node n5("D");
-
-  n1.createVertice(10, &n2);
-  n1.createVertice(5, &n3);
-
-  n2.createVertice(1, &n4);
-  n2.createVertice(2, &n3);
-
-  n3.createVertice(3, &n2);
-  n3.createVertice(9, &n4);
-  n3.createVertice(2, &n5);
-
-  n4.createVertice(4, &n5);
-  n5.createVertice(6, &n4);
-
-  g1.createGraph(&n1);
-  g1.createGraph(&n2);
-  g1.createGraph(&n3);
-  g1.createGraph(&n4);
-  g1.createGraph(&n5);
+  // Node n1("S");
+  // Node n2("A");
+  // Node n3("B");
+  // Node n4("C");
+  // Node n5("D");
+  //
+  // n1.createVertice(10, &n2);
+  // n1.createVertice(5, &n3);
+  //
+  // n2.createVertice(1, &n4);
+  // n2.createVertice(2, &n3);
+  //
+  // n3.createVertice(3, &n2);
+  // n3.createVertice(9, &n4);
+  // n3.createVertice(2, &n5);
+  //
+  // n4.createVertice(4, &n5);
+  // n5.createVertice(6, &n4);
+  //
+  // g1.createGraph(&n1);
+  // g1.createGraph(&n2);
+  // g1.createGraph(&n3);
+  // g1.createGraph(&n4);
+  // g1.createGraph(&n5);
 
   //cout << "The Graph is going to: " << g1.nodeVector[0]->vVector[0].nextNode->name << endl;
 
-  g1.DijkstraAlgorihm();
+  // g1.DijkstraAlgorihm();
   //cout << "The Node is pointing to: " << g1.nodeVector[0]->vVector[0].nextNode->name << endl;
+
+  ifstream file("Samples/dij10.txt");
+  string line;
+  getline(file, line);
+  stringstream ss(line);
+
+  int i;
+  ss >> i;
+  cout << "The array has " << i << " elements." << endl;
+  int array[i][i];
+  fill(array[0], array[0] + i * i, 0);
+
+  int lineCounter = 0;
+  int columnCounter = 1;
+  while(getline(file, line)){
+    int value;
+    int auxiliaryColumnCounter = columnCounter;
+    stringstream ss1(line);
+    while(ss1 >> value){
+      array[lineCounter][auxiliaryColumnCounter] = value;
+      array[auxiliaryColumnCounter][lineCounter] = value;
+      auxiliaryColumnCounter++;
+    }
+    columnCounter++;
+    lineCounter++;
+  }
+
+  for(int j=0; j<i; j++){
+    for(int k=0; k<i; k++){
+      cout << "[" << array[k][j] << "]";
+    }
+    cout << endl;
+  }
 
   return 0;
 }
