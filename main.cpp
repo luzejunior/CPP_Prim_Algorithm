@@ -111,9 +111,10 @@ int main(){
 
   int i;
   ss >> i;
-  cout << "The array has " << i << " elements." << endl;
-  int array[i][i];
-  fill(array[0], array[0] + i * i, 0);
+
+  for(int j=0; j<i; j++){
+    g1.createGraph(new Node(to_string(j)));
+  }
 
   int lineCounter = 0;
   int columnCounter = 1;
@@ -122,20 +123,15 @@ int main(){
     int auxiliaryColumnCounter = columnCounter;
     stringstream ss1(line);
     while(ss1 >> value){
-      array[lineCounter][auxiliaryColumnCounter] = value;
-      array[auxiliaryColumnCounter][lineCounter] = value;
+      g1.nodeVector[lineCounter]->createVertice(value, g1.nodeVector[auxiliaryColumnCounter]);
+      g1.nodeVector[auxiliaryColumnCounter]->createVertice(value, g1.nodeVector[lineCounter]);
       auxiliaryColumnCounter++;
     }
     columnCounter++;
     lineCounter++;
   }
 
-  for(int j=0; j<i; j++){
-    for(int k=0; k<i; k++){
-      cout << "[" << array[k][j] << "]";
-    }
-    cout << endl;
-  }
+  g1.PrimAlgorithm();
 
   return 0;
 }
