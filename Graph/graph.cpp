@@ -94,17 +94,24 @@ void Graph::upgradeNodeWeight(Node* node){
   }
 }
 
-int Graph::getMinorNextNode(Node* node){
+int Graph::getMinorNextNode(int* k){
   int minorValue = 999999999;
   int index = 0;
 
-  for(int i=0; i<node->vVector.size(); i++){
-    if(node->vVector[i].nextNode->weight < minorValue){
-      minorValue = node->vVector[i].nextNode->weight;
-      index = i;
+  for(int i=0; i<this->visitedNodes.size(); i++){
+    for(int j=0; j<this->visitedNodes[i]->vVector.size(); j++){
+      cout << "Visited node: " << this->visitedNodes[i]->vVector[j].nextNode->name << " weight: " << this->visitedNodes[i]->vVector[j].nextNode->weight << endl;
+      if(findNodeOnVector(this->visitedNodes[i]->vVector[j].nextNode)){
+        if(this->visitedNodes[i]->vVector[j].nextNode->weight < minorValue){
+          cout << "J Index: " << j << endl;
+          minorValue = this->visitedNodes[i]->vVector[j].nextNode->weight;
+          index = j;
+          *k = i;
+        }
+      }
     }
   }
-
+  cout << "MinorIndex Index: " << index << endl;
   return index;
 }
 
@@ -144,11 +151,11 @@ void Graph::DijkstraAlgorihm(){
   int i = 0;
   this->visitedNodes.push_back(this->nodeVector[i]);
   this->visitedNodes[i]->weight = 0;
-  
+
 
   while(this->visitedNodes.size() < this->nodeVector.size()){
     upgradeNodeWeight(this->visitedNodes[i]);
-    int minorIndex = getMinorNextNode(this->visitedNodes[i]);
+    int minorIndex = getMinorNextNode(&i);
     int auxIndex = getNodeByName(this->visitedNodes[i]->vVector[minorIndex].nextNode->name);
     cout << "Aux Index: " << auxIndex << endl;
     this->visitedNodes.push_back(this->nodeVector[auxIndex]);
@@ -156,11 +163,9 @@ void Graph::DijkstraAlgorihm(){
   }
 
   for(i=0;i<this->visitedNodes.size();i++){
-    for(int j=0; j<this->visitedNodes[i]->vVector.size(); j++){
-      cout << "Node: " << this->visitedNodes[i]->name << " Going to " << this->visitedNodes[i]->vVector[j].nextNode->name << " which has weight: " << this->visitedNodes[i]->vVector[j].nextNode->weight << endl;
-    }
+    cout << "Node: " << this->visitedNodes[i]->name << endl;
   }
-  
+
   //while(this->visitedNodes.size() < this->nodeVector.size()){
   //}
 }

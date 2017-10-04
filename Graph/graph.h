@@ -15,7 +15,7 @@ class Graph{
     int getNodeByName(string);
     int getMinorValueFromGraphList(int*);
     void upgradeNodeWeight(Node* node);
-    int getMinorNextNode(Node* node);
+    int getMinorNextNode(int*);
     void PrimAlgorithm();
     void DijkstraAlgorihm();
 };
