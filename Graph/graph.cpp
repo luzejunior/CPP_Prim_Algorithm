@@ -28,10 +28,6 @@ SOFTWARE.
 
 #include "graph.h"
 
-//Graph::Graph(){
-//  createGraph();
-//}
-
 void Graph::createGraph(Node* node){
   this->nodeVector.push_back(node);
 }
@@ -57,23 +53,13 @@ int Graph::getMinorValueFromGraphList(int* i){
   int minorValue = 999999999;
   int index = 0;
 
-  //for(int j=0; j<this->nodeVector[i]->vVector.size(); j++){
-  //  if(findNodeOnVector(this->nodeVector[i]->vVector[j].nextNode)){
-  //    if(this->nodeVector[i]->vVector[j].value < minorValue){
-  //      cout << "Vector name: " << this->nodeVector[i]->vVector[j].nextNode->name << " Vector to compare: " << endl;
-  //      minorValue = this->nodeVector[i]->vVector[j].value;
-  //      index = j;
-  //    }
-  //  }
-  //}
-
   for(int k=0; k<this->visitedNodes.size(); k++){
     for(int j=0; j<this->visitedNodes[k]->vVector.size(); j++){
       if(findNodeOnVector(this->visitedNodes[k]->vVector[j].nextNode)){
         if(this->visitedNodes[k]->vVector[j].value < minorValue){
-          cout << "k Value: " << k << endl;
-          cout << "j Value: " << j << endl;
-          cout << "Vector name: " << this->visitedNodes[k]->name << " Going to: " << this->visitedNodes[k]->vVector[j].nextNode->name << endl;
+          // cout << "k Value: " << k << endl;
+          // cout << "j Value: " << j << endl;
+          // cout << "Vector name: " << this->visitedNodes[k]->name << " Going to: " << this->visitedNodes[k]->vVector[j].nextNode->name << endl;
           minorValue = this->visitedNodes[k]->vVector[j].value;
           index = j;
           *i = k;
@@ -81,7 +67,8 @@ int Graph::getMinorValueFromGraphList(int* i){
       }
     }
   }
-  cout << "index Value: " << index << endl;
+
+  //cout << "index Value: " << index << endl;
   return index;
 }
 
@@ -100,10 +87,10 @@ int Graph::getMinorNextNode(int* k){
 
   for(int i=0; i<this->visitedNodes.size(); i++){
     for(int j=0; j<this->visitedNodes[i]->vVector.size(); j++){
-      cout << "Visited node: " << this->visitedNodes[i]->vVector[j].nextNode->name << " weight: " << this->visitedNodes[i]->vVector[j].nextNode->weight << endl;
+      //cout << "Visited node: " << this->visitedNodes[i]->vVector[j].nextNode->name << " weight: " << this->visitedNodes[i]->vVector[j].nextNode->weight << endl;
       if(findNodeOnVector(this->visitedNodes[i]->vVector[j].nextNode)){
         if(this->visitedNodes[i]->vVector[j].nextNode->weight < minorValue){
-          cout << "J Index: " << j << endl;
+          //cout << "J Index: " << j << endl;
           minorValue = this->visitedNodes[i]->vVector[j].nextNode->weight;
           index = j;
           *k = i;
@@ -111,28 +98,23 @@ int Graph::getMinorNextNode(int* k){
       }
     }
   }
-  cout << "MinorIndex Index: " << index << endl;
+
+  //cout << "MinorIndex Index: " << index << endl;
   return index;
 }
 
 void Graph::PrimAlgorithm(){
-  //for(int i=0; i<this->nodeVector.size(); i++){
-  //  for(int j=0; j<this->nodeVector[i]->vVector.size(); j++){
-  //    cout << "The vector " << this->nodeVector[i]->name << " has " <<
-  //    this->nodeVector[i]->vVector[j].nextNode->name << " neighboor with value: " << this->nodeVector[i]->vVector[j].value << endl;
-  //  }
-  //}
-
   int i = 0;
   int auxindex = 0;
   int sum = 0;
+
   this->visitedNodes.push_back(this->nodeVector[i]);
 
   while(this->visitedNodes.size() < this->nodeVector.size()){
     int minorIndex = getMinorValueFromGraphList(&i);
-    cout << "i Value: " << i << endl;
+    //cout << "i Value: " << i << endl;
     auxindex = getNodeByName(this->visitedNodes[i]->vVector[minorIndex].nextNode->name);
-    cout << "Value: " << this->visitedNodes[i]->vVector[minorIndex].value << endl;
+    //cout << "Value: " << this->visitedNodes[i]->vVector[minorIndex].value << endl;
     sum += this->visitedNodes[i]->vVector[minorIndex].value;
     i = auxindex;
     this->visitedNodes.push_back(this->nodeVector[i]);
@@ -140,10 +122,7 @@ void Graph::PrimAlgorithm(){
 
   cout << "Sum of everything: " << sum << endl;
   for(int i=0; i<this->visitedNodes.size(); i++){
-    //for(int j=0; j<visitedNodes[i]->vVector.size(); j++){
       cout << "The vector " << this->visitedNodes[i]->name << endl;
-      //visitedNodes[i]->vVector[j].nextNode->name << " neighboor with value: " << visitedNodes[i]->vVector[j].value << endl;
-    //}
   }
 }
 
@@ -158,15 +137,11 @@ void Graph::DijkstraAlgorihm(){
     upgradeNodeWeight(this->nodeVector[auxIndex]);
     int minorIndex = getMinorNextNode(&i);
     auxIndex = getNodeByName(this->visitedNodes[i]->vVector[minorIndex].nextNode->name);
-    cout << "Aux Index: " << auxIndex << endl;
+    //cout << "Aux Index: " << auxIndex << endl;
     this->visitedNodes.push_back(this->nodeVector[auxIndex]);
-    //i++;
   }
 
   for(i=0;i<this->visitedNodes.size();i++){
     cout << "Node: " << this->visitedNodes[i]->name << endl;
   }
-
-  //while(this->visitedNodes.size() < this->nodeVector.size()){
-  //}
 }
