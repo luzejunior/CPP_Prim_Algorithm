@@ -1,7 +1,13 @@
 CC = g++
+FLAGS = -std=c++11
+
+.PHONY: prim dijkstra
 
 program: Graph/*.cpp Graph/*.h Makefile main.cpp
-	$(CC) -std=c++11 Graph/*.cpp main.cpp -o program
+	$(CC) $(FLAGS) Graph/*.cpp main.cpp -o program
 
-run:
-	./program
+prim:
+	./program prim
+
+dijkstra:
+	./program dijkstra
