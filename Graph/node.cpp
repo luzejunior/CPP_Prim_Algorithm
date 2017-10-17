@@ -32,9 +32,9 @@ Node::Node(string c){
   name = c;
 }
 
-void Node::createVertice(int value, Node* nextNode){
-  Vertice v1;
-  v1.configVertice(value, nextNode);
+void Node::createEdge(int value, Node* nextNode){
+  Edge v1;
+  v1.configEdge(value, nextNode);
   vVector.push_back(v1);
   //createNode(vVector[0]->value);
 }

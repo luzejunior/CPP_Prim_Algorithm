@@ -56,8 +56,8 @@ int main(int argc, char* argv[]){
     int auxiliaryColumnCounter = columnCounter;
     stringstream ss1(line);
     while(ss1 >> value){
-      g1.nodeVector[lineCounter]->createVertice(value, g1.nodeVector[auxiliaryColumnCounter]);
-      g1.nodeVector[auxiliaryColumnCounter]->createVertice(value, g1.nodeVector[lineCounter]);
+      g1.nodeVector[lineCounter]->createEdge(value, g1.nodeVector[auxiliaryColumnCounter]);
+      g1.nodeVector[auxiliaryColumnCounter]->createEdge(value, g1.nodeVector[lineCounter]);
       auxiliaryColumnCounter++;
     }
     columnCounter++;

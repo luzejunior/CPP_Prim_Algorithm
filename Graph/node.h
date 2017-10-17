@@ -29,7 +29,7 @@ SOFTWARE.
 #include <string>
 #include <iostream>
 #include <vector>
-#include "vertices.h"
+#include "edge.h"
 
 using namespace std;
 
@@ -37,8 +37,8 @@ class Node{
   public:
     string name;
     int weight = 999999999;
-    vector<Vertice> vVector;
+    vector<Edge> vVector;
     Node(string name);
-    void createVertice(int, Node*);
+    void createEdge(int, Node*);
     void createNode(int value);
   };

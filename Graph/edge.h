@@ -31,9 +31,9 @@ SOFTWARE.
 class Node;
 using namespace std;
 
-class Vertice{
+class Edge{
 public:
   int value = 0;
   Node* nextNode;
-  void configVertice(int, Node*);
+  void configEdge(int, Node*);
 };

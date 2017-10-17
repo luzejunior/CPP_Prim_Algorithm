@@ -26,9 +26,9 @@ SOFTWARE.
 
 */
 
-#include "vertices.h"
+#include "edge.h"
 
-void Vertice::configVertice(int value, Node* nextNode){
+void Edge::configEdge(int value, Node* nextNode){
   this->value = value;
   this->nextNode = nextNode;
 }
